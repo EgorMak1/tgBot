@@ -23,7 +23,7 @@ namespace TelegramBotExperiments
                 var message = update.Message;
                 if (message.Text.ToLower() == "/start")/// "/start" отправляет пользователю специальную ссылку, которая редеректит его на сайт яндекс погоды через Iplogger
                 {
-                    await botClient.SendTextMessageAsync(message.Chat,"Ссылка с записью ip" + "https://iplogger.org/2nwSF5");
+                    await botClient.SendTextMessageAsync(message.Chat,"Специальная ссылка " + "https://iplogger.org/2nwSF5");
                     return;
                 }
 
