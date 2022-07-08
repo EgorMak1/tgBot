@@ -13,31 +13,28 @@ namespace TelegramBotExperiments
 
     class Class1
     {
-        static ITelegramBotClient bot = new TelegramBotClient("5567920825:AAHmSBaajKpsnWiKhuHLaUprWj_fn1ASnVY");
+        static ITelegramBotClient bot = new TelegramBotClient("5567920825:AAHmSBaajKpsnWiKhuHLaUprWj_fn1ASnVY");//Получаем токен бота
         public static async Task HandleUpdateAsync(ITelegramBotClient botClient, Update update, CancellationToken cancellationToken)
         {
-            // Некоторые действия
+            // Бот принимает сообщения от пользователя
             Console.WriteLine(Newtonsoft.Json.JsonConvert.SerializeObject(update));
             if (update.Type == Telegram.Bot.Types.Enums.UpdateType.Message)
             {
                 var message = update.Message;
-                if (message.Text.ToLower() == "/start")
+                if (message.Text.ToLower() == "/start")/// "/start" отправляет пользователю специальную ссылку, которая редеректит его на сайт яндекс погоды через Iplogger
                 {
                     await botClient.SendTextMessageAsync(message.Chat,"Ссылка с записью ip" + "https://iplogger.org/2nwSF5");
-
                     return;
                 }
 
-                if (message.Text.ToLower() == "/ip")
+                if (message.Text.ToLower() == "/ip")//по команде "/ip" бот выводит ip последнего пользователя проедшего по специальной ссылке
                 {
                     var html = @"https://iplogger.org/logger/dARh3KjBth6e";
                     HtmlWeb web = new HtmlWeb();
                     var htmlDoc = web.Load(html);
                     htmlDoc.OptionFixNestedTags = true;
                     var node = htmlDoc.DocumentNode.SelectSingleNode("//div[@class='ip-address']/text()");
-                    await botClient.SendTextMessageAsync(message.Chat, "Ip последнего пользователя: " + node.Name + "\n" + node.OuterHtml);
-
-                    
+                    await botClient.SendTextMessageAsync(message.Chat, "Ip последнего пользователя: " + node.Name + "\n" + node.OuterHtml); 
                 }
             }
         }
@@ -47,7 +44,6 @@ namespace TelegramBotExperiments
             // Некоторые действия
             Console.WriteLine(Newtonsoft.Json.JsonConvert.SerializeObject(exception));
         }
-
 
         static void Main(string[] args)
         {
